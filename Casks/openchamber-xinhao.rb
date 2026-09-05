@@ -26,6 +26,18 @@ cask "openchamber-xinhao" do
 
   app "OpenChamber.app"
 
+  # The build is ad-hoc signed, so a quarantined copy fails Gatekeeper ("app is
+  # damaged") on first launch, and every release has a new code identity, so
+  # Homebrew's approval inheritance on upgrade never matches either. Dropping
+  # the quarantine attribute is what `--no-quarantine` did before Homebrew 6
+  # removed the flag. Tolerate a non-zero exit: at worst one file keeps the
+  # attribute and macOS asks once.
+  postflight_steps do
+    run "/usr/bin/xattr",
+        args:         ["-dr", "com.apple.quarantine", "{{appdir}}/OpenChamber.app"],
+        must_succeed: false
+  end
+
   uninstall quit: "dev.openchamber.desktop"
 
   zap trash: [
@@ -42,9 +54,8 @@ cask "openchamber-xinhao" do
   ]
 
   caveats <<~EOS
-    This build is ad-hoc signed and not notarized. Install and upgrade with
-    quarantine disabled or macOS will refuse to open it:
-
-      export HOMEBREW_CASK_OPTS="--no-quarantine"
+    This build is ad-hoc signed and not notarized (no Apple Developer ID). The
+    cask removes the quarantine attribute after install so macOS opens it
+    without a Gatekeeper prompt. Only install it if you trust the fork's CI.
   EOS
 end
