@@ -1,8 +1,8 @@
 cask "openchamber-xinhao" do
   # version = "<upstream>,<yyyymmddHHMM>,<short sha>"; rewritten by fork-sync.yml
   # in Gaaaavin/openchamber on every release. Do not edit by hand.
-  version "1.22.2,202609052124,6fafa5b"
-  sha256 "dd1e86e7f7762f1c8667fd45cfe86390a7931998d5c18e76893a27f702c42256"
+  version "1.22.2,202609052130,5553f32"
+  sha256 "2e6ea1494b18378529fcd9b2d7e6279d21da9294d532b00dfe491b7045b94bd9"
 
   url "https://github.com/Gaaaavin/openchamber/releases/download/v#{version.csv.first}-xinhao.#{version.csv.second}-#{version.csv.third}/OpenChamber-#{version.csv.first}-mac-arm64.zip"
   name "OpenChamber (xinhao fork)"
